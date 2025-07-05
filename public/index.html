@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CATACLYSM - GHz</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.cdnfonts.com/css/snakehead-graffiti" rel="stylesheet">
+</head>
+<body oncontextmenu="return false">
+  <div class="card">
+    <img src="cataclysm.png" alt="Capa da música" class="capa" draggable="false" />
+    <h1>CATACLYSM</h1>
+    <p>por GHz</p>
+
+    <div class="player">
+      <button id="playPauseBtn" aria-label="Play/Pause">
+        <img src="spotify_black.png" alt="Play/Pause" />
+      </button>
+
+      <div class="progress-container">
+        <span id="currentTime">0:00</span>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <audio id="audio" preload="auto">
+      <source src="CATACLYSM.wav" type="audio/wav" />
+    </audio>
+  </div>
+
+  <script src="player.js"></script>
+</body>
+</html>
