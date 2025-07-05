@@ -6,27 +6,46 @@
 }
 
 html, body {
-  height: 100%;
+  margin: 0; padding: 0; height: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, rgb(248, 248, 229), rgba(230, 230, 225, 0.9)); 
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom right, rgba(250, 250, 245, 1), rgba(230, 230, 225, 0.9));
   display: flex;
   justify-content: center;
   align-items: center;
   color: #111;
   user-select: none;
+  position: relative;
+  margin: 0;
+padding: 0;
+height: 100vh;
+width: 100vw;
+overflow: hidden;
+
 }
 
-/* Card com efeito de profundidade */
+/* Card com efeito de profundidade + glow roxo */
 .card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.07); /* vidro mais transparente */
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-radius: 24px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
   padding: 2.5rem 2rem;
   text-align: center;
   width: 90%;
   max-width: 400px;
+  position: relative;
+  z-index: 1;
+
+  /* Borda translúcida estilo vidro */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* Sombra suave + glow sutil */
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.1),
+    0 0 8px rgba(255, 0, 0, 0.25); /* glow roxo bem sutil */
 }
+
 
 /* Imagem da capa */
 .capa {
@@ -35,23 +54,26 @@ html, body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5rem;
   pointer-events: none;
+
+  /* 🎨 Borda colorida */
+  border: 1px solid #000000; /* ou qualquer cor que combine com sua arte */
 }
+
 
 /* Título */
 h1 {
-  font-family: 'Snakehead Graffiti', sans-serif;                                         
+  font-family: 'Snakehead Graffiti', sans-serif;
   font-size: 2rem;
   margin-top: 0;
-  margin-bottom: 0.3rem; /* margem pequena embaixo */
+  margin-bottom: 0.3rem;
   line-height: 1.1;
 }
 
 p {
-  font-family: 'Poppins', sans-serif;                                             
-  margin-top: 3;
-  margin-bottom: 1.5rem; /* espaço depois do parágrafo */
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
 }
-
 
 /* Player */
 .player {
@@ -112,6 +134,7 @@ p {
 
 #currentTime,
 #duration {
+  font-family: 'Poppins', sans-serif;
   font-size: 0.8rem;
   color: #333;
 }
@@ -119,4 +142,13 @@ p {
 /* Esconde o player nativo */
 audio {
   display: none;
+}
+
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
 }
