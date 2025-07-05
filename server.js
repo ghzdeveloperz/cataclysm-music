@@ -1,21 +1,39 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-
+const express = require('express');
+const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/registrar-ip", (req, res) => {
-  const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
-  const log = `${new Date().toISOString()} - IP: ${ip}\n`;
-  fs.appendFile("ips.txt", log, (err) => {
-    if (err) console.error("Erro:", err);
-  });
-  res.send("IP registrado");
+const db = new sqlite3.Database('./ips.db', (err) => {
+  if (err) {
+    console.error("Erro ao conectar no banco SQLite:", err);
+  } else {
+    console.log("Conectado ao banco SQLite.");
+  }
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+// Cria tabela se não existir
+db.run(`CREATE TABLE IF NOT EXISTS ips (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ip TEXT NOT NULL,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)`);
+
+app.get('/', (req, res) => {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+  // Salva IP no banco
+  db.run('INSERT INTO ips(ip) VALUES(?)', [ip], (err) => {
+    if (err) {
+      console.error('Erro ao salvar IP:', err);
+    } else {
+      console.log(`IP salvo: ${ip}`);
+    }
+  });
+
+  res.send('Olá, IP registrado!');
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
